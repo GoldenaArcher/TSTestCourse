@@ -12,6 +12,9 @@ const config: Config.InitialOptions = {
       },
     ],
   },
+  // collectCoverage: true, // Only enable via CLI --coverage
+  collectCoverageFrom: ["<rootDir>/src/app/**/*.ts"],
+  coverageDirectory: "coverage",
 };
 
 export default config;
