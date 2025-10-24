@@ -1,6 +1,52 @@
-import { getStringInfo, toUpperCase } from "../app/utils";
+import { getStringInfo, StringUtil, toUpperCase } from "../app/utils";
 
 describe("Utils", () => {
+  describe("toUpperCase", () => {
+    let sut: StringUtil;
+
+    beforeEach(() => {
+      sut = new StringUtil();
+      console.log("Setup before each test");
+    });
+
+    afterEach(() => {
+      // Clean up resources if needed
+      console.log("Teardown after each test");
+    });
+
+    it("should convert string to uppercase", () => {
+      const actual = sut.toUpperCase("hello");
+      console.log("Actual Test");
+
+      expect(actual).toBe("HELLO");
+    });
+
+    it("should throw error for empty string - function", () => {
+      function expectError() {
+        sut.toUpperCase("");
+      }
+      expect(expectError).toThrow("Input string cannot be empty");
+    });
+
+    it("should throw error for empty string - arrow function", () => {
+      expect(() => {
+        sut.toUpperCase("");
+      }).toThrow("Input string cannot be empty");
+    });
+
+    it("should throw error for empty string - try catch", (done) => {
+      try {
+        sut.toUpperCase("");
+        done("Expected error was not thrown");
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+        expect(error).toHaveProperty("message", "Input string cannot be empty");
+      } finally {
+        done();
+      }
+    });
+  });
+
   it("should convert string to uppercase", () => {
     // arrange
     const sut = toUpperCase; // system under test

@@ -1,3 +1,13 @@
+export class StringUtil {
+  toUpperCase(str: string): string {
+    if (!str) {
+      throw new Error("Input string cannot be empty");
+    }
+
+    return str.toUpperCase();
+  }
+}
+
 export const toUpperCase = (str: string): string => {
   return str.toUpperCase();
 };
