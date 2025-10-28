@@ -8,7 +8,7 @@
 // iteration 3:
 //  admin password should contain a number
 
-import { PasswordChecker, PasswordErrors } from "../app/password.util";
+import { PasswordChecker, PasswordErrors } from "./password.util";
 
 describe("PasswordChecker", () => {
   let sut: PasswordChecker;
