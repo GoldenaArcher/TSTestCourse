@@ -1,5 +1,7 @@
 import type { Config } from "@jest/types";
 
+const baseDir = "<rootDir>/src/app/doubles";
+
 const config: Config.InitialOptions = {
   preset: "ts-jest",
   testEnvironment: "node",
@@ -13,8 +15,9 @@ const config: Config.InitialOptions = {
     ],
   },
   // collectCoverage: true, // Only enable via CLI --coverage
-  collectCoverageFrom: ["<rootDir>/src/app/**/*.ts"],
+  collectCoverageFrom: [`${baseDir}/**/*.ts`],
   coverageDirectory: "coverage",
+  testMatch: [`${baseDir}/**/*.test.ts`],
 };
 
 export default config;
