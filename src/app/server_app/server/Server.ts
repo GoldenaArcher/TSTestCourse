@@ -8,7 +8,7 @@ import { HTTP_CODES } from '../model/ServerModel';
 
 export class Server {
 
-    private server: NodeServer;
+    private server?: NodeServer;
     private authorizer = new Authorizer();
     private reservationsDataAccess = new ReservationsDataAccess();
 
@@ -41,7 +41,8 @@ export class Server {
                     break;
             }
         } catch (error) {
-            response.writeHead(HTTP_CODES.INTERNAL_SERVER_ERROR, JSON.stringify(`Internal server error: ${error.message}`))
+            const message = error instanceof Error ? error.message : String(error);
+            response.writeHead(HTTP_CODES.INTERNAL_SERVER_ERROR, JSON.stringify(`Internal server error: ${message}`))
             console.log(error);
         }
     }

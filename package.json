@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watch",
-    "test:generate": "jest --coverage"
+    "test:generate": "jest --coverage",
+    "start": "ts-node src/app/server_app/Launcher.ts"
   },
   "repository": {
     "type": "git",

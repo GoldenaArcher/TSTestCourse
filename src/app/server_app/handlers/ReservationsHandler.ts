@@ -108,13 +108,15 @@ export class ReservationsHandler {
             if (reservation) {
                 const requestBody: Partial<Reservation> = await getRequestBody(this.request);
                 if (this.isValidPartialReservation(requestBody)) {
-                    for (const property in requestBody) {
-                        await this.reservationsDataAccess.updateReservation(
-                            id,
-                            property as keyof Reservation,
-                            requestBody[property]
-                        )
-                    }
+                        for (const property in requestBody) {
+                            const prop = property as keyof Reservation;
+                            const value = (requestBody as any)[prop];
+                            await this.reservationsDataAccess.updateReservation(
+                                id,
+                                prop,
+                                value
+                            )
+                        }
                     this.response.writeHead(HTTP_CODES.OK, { 'Content-Type': 'application/json' });
                     this.response.write(JSON.stringify(`Updated ${Object.keys(requestBody)} of reservation ${id}`));
                 } else {
@@ -161,14 +163,7 @@ export class ReservationsHandler {
         if (Object.keys(reservation).length === 0) {
             return false;
         }
-        const genericReservation: Reservation = {
-            endDate: undefined,
-            id: undefined,
-            room: undefined,
-            startDate: undefined,
-            user: undefined
-        }
-        const reservationKeys = Object.keys(genericReservation);
+      const reservationKeys = ["id", "room", "user", "startDate", "endDate"];
         let hasValidKeys = false;
         let hasRightKeys = true;
         for (const key in reservation) {
@@ -185,14 +180,7 @@ export class ReservationsHandler {
         if (Object.keys(reservation).length === 0) {
             return false;
         }
-        const genericReservation: Partial<Reservation> = {
-            endDate: undefined,
-            room: undefined,
-            startDate: undefined,
-            user: undefined,
-            id: undefined
-        }
-        const reservationKeys = Object.keys(genericReservation);
+      const reservationKeys = ["id", "room", "user", "startDate", "endDate"];
         let hasRightKeys = true;
         for (const key in reservation) {
             if (!reservationKeys.includes(key)) {
